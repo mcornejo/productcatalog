@@ -1,0 +1,38 @@
+package com.murdix.bm.parser
+
+import com.murdix.bm.entities.ProductCatalog
+import org.scalatest._
+import flatspec._
+import matchers._
+
+class ProductCatalogParserTest extends AnyFlatSpec with should.Matchers {
+  "The parser" should "parse 5 random lines correctly" in {
+
+    val line1: String = "Toshiba,71,,NOK,Male,\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAALISURBVDjLpZNpMNRhHMc31ExNmjRTDdVMsxXLkntnTcmxJTKFMK6JnK1KcheKDDZXubbSoRdlNFFNGFTIbeiNsyjHnzI0ZrFk/621+21bx6wx9caLz/Pi+T3fz/Ob56AAoKwH2WAU2QyP+wNO6xKY3WgOsMseKJQvTrm6p0ohplzcuqR4/lsQ0QQmhzA0SxkUW6QPbv47xz9t3zBjd3ZeStu0g+OAFJGUESnUtYLwRqjHjyhqxxFCvVtE+dwxC84vc5ZklmV1dHnhrJUNlW9ty588ZS+wzSHiVwkMwxpAPRm/b0/kcOqF82/m5wyYpIBhwpXfyTCOyAjKLJT0Frji29sktD+xQgeX7ikrGoTVY3nhhJaJZFj/hFA+vD+YeMFOe7QwVhOF6c4yYHYUU53FaEm3Hl8UhNbKBKJdagVC1b0i0zPvyS3eRLayz7Didp+hSteb+fMT3XELwu8lGKtNg6DrNRaIRnQ9DSBlAr2QGsTo2euKlVUkC9t2JFNciUSKCwEFF0LMCi2S8LpjJWJBIwQDl8FrC8KXZ77oyXZDW7aD+qIguBrYsNEOCpv65VsPiE3Kn+y6DjHZgrl+L5AjHpj5HI2hPPPxKeNDH1cOUffKBwgpSk4iitLu5fDd9IOcsU9RS2FPkMPu4HfHoI9rSfalM4yk3aqtCA4HvcPjnTTz5XBkskZlZ0UIxIJ6kEO++D1yDtPSTnq5LJFjlh5/zTvQuVQBk3BtVWYEPc/7qjqvpzwaHRWZ+NHqjLkhD/Dar+FrrsXPqjSGJjNBe5CRSM9ZLbhYDgO2pp0+W8PqZQoLmCHQ+9AJNdFqaHpgg7oEo9E7/keOy24sWEON5q7NNg6jbV0R0APLQGeXQotdggR/HQhbciFszUJrkgWe+x0AK/AeaH6vligGzbdIxopAHmdTFZLjRRNV37YRVWVY1pVG6VD/9xv/AJGzmhVs7+fUAAAAAElFTkSuQmCC\",1993"
+    val line2: String = "HP,99,Suspendisse accumsan tortor quis turpis.,PEN,Male,\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAKGSURBVDjLhZNdSFNxFMBHCdGDr0sIg3qwiF6jwMeefY0giB56CoMIeuhN8KHXCJuoEYUZpJW0QMyPmWl+ldM5FTedujn34e7c7ma6z/vr/O9maRINfrtj55zfPed/7rUAloPceNxbKzQJTiEmJASP0Kxif+cfLKwUbELu87Sf+YDOmpZlM50nGN+h3xlAxco5lYcE5eLejiEPhaJBUIcPUynez6WYiGfZk6SioGIqR+XuS/YFNhVI5jA/acluH07ycmwbV7KIIf/JBb1YipclNlMgP64KRX88R/u4hlcrJfVM79E8qLGyg9lBRL7Scs0qDEMJiqrWvHufzNczp9M2HKNlKIY7CMsRGPemZZwM8QxERaBLK4kCpIS+0pnYlGDW5U/yanRLBFGav0SxO3U6R1ZUQljxbtRHWoo2pRvvNrg2C7j8uorPKoG2EPwpd47SIsWtIpn0pVUwJJwuE/JEMtjlULt+JE3cwV2Vo/0WNDui2AYiNA2EmVo9KnBv7NI1rfN6MiHEmTsgmJ1dT2BzhM3it2L3agaq7f0ROkd8LDXcYdDuYNTxjUDLfWbW/oxgHuLY6h6uKAR2wZcSkuDZyjAfyjC+lsf/0Ers3gmMF1XkOi4eOkRzjTlZTVR2tJSA6TB89UP/SoFPC1m+Nz5Ae1YBz8/D+gUYrsb+6LZhrvHggxSTdbliMCLFfcsG9sU88111RJ9ayHSeEoEUh4SAiAarYcLafeRRDqYMZqSD/uUCdneWufrrxCQt011VEniEiOA+Bzetb/75MjnXdRbDWVYb6tm6ayExcQyjrUZmKwtaz0Cd9Ynlf6/zrcaP2sbZCiN0yUK45niBWmuea1a4Ys1y2XryF6CZCaxnm2/nAAAAAElFTkSuQmCC\",1988"
+    val line3: String = "Acer,69,\"Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis. Sed ante. Vivamus tortor.\",IDR,Female,\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAFFSURBVCjPhZG/K8RxHMZfdy5OnEEMhhuMJCMldVl0JcOV7Bb2K/+CRakbTOdOsSjWK2WRZMDiR1eK7sJEuYsv98P3/XkM93Uj72d51+vp6aknJP6+yO+z3U/azTGsDt2rQGb5NQBCiHxqz3tUU5LUUFm73uZCi7Rw4lQ1OdVVVUUfaupLa5pJChESud5YcT4e4RPD4TDEDfs8lNz4iRcG0pPxKB7WVp4VYgwMaxXC4JJD1PHb2ibLN7f0oSSEQROdfGL4GEaOLN84rojiJiACAgwfhyPPFsIwhCFaCed1ujB8cmTbSSN4cA5hsMNnuvHJs4UFPYxRqthhK2Hj7KlBkWyADJ9FKryUtA4hAZnE23GZHq65I0KcMTxe8WYvjgIDTKe0M9gboxOjwTsvnpYuD6BtgKl+pZmzUdUoUVDmMhgr9N/cP2kRvjgCZVaBAAAAAElFTkSuQmCC\",2010"
+    val line4: String = "HP,62,,CNY,Female,\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAHSSURBVDjLpZPbSxtREMbzL4pSpYj1VilUmmpQSCKCSLAgihFTo9Eg0TRZY5LdxJgbKYo+2AstLRbU1nfxrlmTdLPJ55nZ+OCjyYGPYQ8zv/PN7DkmAKZGZGoakN5OKSeqPfAPtk9Ca8ew+g4xvPIHQ94DWJZ/Y3DxJ94v/ID54zf0z32BbXFPpToGODZOKrPpUzxX5pmdCgPo5HrUN7kNBtjW/qKe1TORMwDW1SPeeJ0ucMzlcshms0gmkyhqVSQSCVzmdSiKAlmWEQ6HOa/TkakBxMBolUQyFRRIpQruijp/3xR0XN/ruMiXcXar4fRG4/yOsaQBoGmzpa08x0wmg1QqhVgsxoBoNMoQSZIQCATg9/s5r300YQDoV9HS9Cr+l6vspFRzQgBVOCE3j06uVJ3zX47EDIBl6RdvdG9ec6Se4/E4QqEQA4LBIO5FSz6fD16vFx6Ph/PabLIBMM9/541ypYpyzQWpqD2VKiB54YJEq2VowwC8m/tqTFU+50i9RyIR7pUK6WSKbrcbLpcLTqeT85ot6wagf3a/rnvQNCjh8S1Ib6Z3+Wb1fviMLkcWr8bTYsqbPKg2u4JWawQvhsPCdkicLEHUkCQGNPwaGwU8AG9RQVkc+5PeAAAAAElFTkSuQmCC\",2008"
+    val line5: String = "Dell,48,\"Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.\",CNY,Male,\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAJeSURBVDjLhZNdSFNhGMc3z9lUREVnGmgzEZa7kGBe6kWYg26syz7uoqKgEOpiUjfdjALJiwmDYKSMburm7EInG8yNttm+UitwQm26sVgrcSPWvtf5977HbSyc9sB/73ne53l+7//snCMCIKIiIVYqlVM6nc6vUCgukZylexWxKpVqwmAweGgP3avN0Z8QWTxEAbMZ8XgcvuVlIQ9VRK83LRahtrG6WqtVDhaJafK5uRlBtxuxWAzbZP3IMDhoahK0JRYjuL4u1GjPVgVQcXcI+NLWBs5oRCQSAbe0hM2eHkS7uxHt6MCH1lZwi4uHNbLuNALsd3ZibWQELwcGYBscRFgux15/P3Z7e7FDQOb2diy0tGBFKkWcODoCSMtk+DE+jsTYGL6PjiJGYNHhYewRUJiAQn19+Epchbq6cMCy/wJ8Ph/K5fKxKpVKyOVygmjQPTpzLCCTySAQCCCZTMLv98Pj8cBCngINnuf/D6DDJpNJOLlQKCCRSMDpdAp5sVhEPp+H1+s9CqANVQjHcbVmm82G7dfP8f6mEraLEjiuyfFu7n5jQFVVAD3d8eIhPmkmkDPPgw9akHnzCIEH52GdZGdOBFD7drsd9utnkSXDWJgGZruAZ0PYn7sA6xSzK7zKFECG/tQDqKj9dDot2OY3ONRH6ulp2CZZXgDQe0ylUr8opP7PpA6y2SwcV8/g96tbABnKa0RIEkXvMbCqmW8CQK/Xw+FwwOVyNdb8DHx3ziE+O4SfjyUI3xZj7bIUFjXzRABotVo3+Yxxkt5qbmDlyiliWwLztAzGu+oUnf0LtxKkWPCjmmgAAAAASUVORK5CYII=\",2013"
+
+    val maybeProductCatalog1: Option[ProductCatalog] = ProductCatalogParser.parser(line1)
+    val maybeProductCatalog2: Option[ProductCatalog] = ProductCatalogParser.parser(line2)
+    val maybeProductCatalog3: Option[ProductCatalog] = ProductCatalogParser.parser(line3)
+    val maybeProductCatalog4: Option[ProductCatalog] = ProductCatalogParser.parser(line4)
+    val maybeProductCatalog5: Option[ProductCatalog] = ProductCatalogParser.parser(line5)
+
+    /* All lines above are valid */
+    maybeProductCatalog1.isDefined shouldBe true
+    maybeProductCatalog2.isDefined shouldBe true
+    maybeProductCatalog3.isDefined shouldBe true
+    maybeProductCatalog4.isDefined shouldBe true
+    maybeProductCatalog5.isDefined shouldBe true
+
+    /* All lines above were correctly serialized */
+    maybeProductCatalog1.get.category_id shouldBe Some(71L)
+    maybeProductCatalog2.get.brand shouldBe Some("HP")
+    maybeProductCatalog3.get.currency shouldBe Some("IDR")
+    maybeProductCatalog4.get.comment shouldBe None
+    maybeProductCatalog5.get.year_release shouldBe Some(2013)
+
+  }
+}

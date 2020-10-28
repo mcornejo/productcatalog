@@ -1,9 +1,10 @@
 package com.murdix.bm.jobs.local
 
 import com.murdix.bm.entities.ProductCatalog
-import org.apache.spark.sql.{Dataset, SparkSession}
+import org.apache.spark.sql.{Dataset, SaveMode, SparkSession}
 import java.io.File
 import java.net.URL
+
 import scala.sys.process._
 
 object TransformaterCSVJobLocal extends App {
@@ -28,8 +29,13 @@ object TransformaterCSVJobLocal extends App {
     .option("inferSchema", "true")
     .csv(csvPath).as[ProductCatalog]
 
-  // We show the lines in the terminal
-  allProductCatalog.show()
+  // We save the dataset in parquet
+  allProductCatalog
+    .write
+    .format("parquet")
+    .option("compression", "snappy")
+    .mode(SaveMode.Overwrite)
+    .save("output/csv/products/")
 
   // Close the spark session
   spark.close

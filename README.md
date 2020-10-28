@@ -20,6 +20,10 @@ In `jobs.local` there are the two (Scala) Objects with a Main.
 In `entities` we define the class that will represent each line of the Product Catalog. This is the core of using
 Dataset to apply transformations on a structured and strongly typed distributed collection.
 
+## Output
+The output of the job is stored in a columnar parquet file. This makes easier the reading by only consuming the columns needed.
+The folder `output/` contains the files of the local execution.  
+
 ## Compilation
 As the project is written using Scala, the source code must be compiled in order to be executed by the JVM.
 
@@ -36,4 +40,16 @@ or
 
 ```bash
 $ sbt "runMain com.murdix.bm.jobs.local.TransformaterTextJobLocal"
+```
+
+## Tests
+To execute the tests, just type in a terminal:
+```bash
+$ sbt test
+```
+
+## Packaging
+To execute (launch) a spark job in a cluster, first it needs to be packaged in a jar:
+```bash
+sbt clean package -J-Xmx3G -J-Xss2M
 ```

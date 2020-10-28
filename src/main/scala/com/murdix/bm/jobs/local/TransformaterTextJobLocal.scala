@@ -1,8 +1,10 @@
 package com.murdix.bm.jobs.local
 
-import org.apache.spark.sql.{Dataset, SparkSession}
+import org.apache.spark.sql.{Dataset, SaveMode, SparkSession}
 import java.io.File
 import java.net.URL
+import com.murdix.bm.entities.ProductCatalog
+import com.murdix.bm.parser.ProductCatalogParser
 import scala.sys.process._
 
 object TransformaterTextJobLocal extends App {
@@ -22,9 +24,18 @@ object TransformaterTextJobLocal extends App {
 
   /* We read the csv and we read line by line */
   val rawFile: Dataset[String] = spark.read.textFile(csvPath)
+  val header = rawFile.first()
 
-  // We show the lines in the terminal
-  rawFile.show()
+  /* We parse each line using our custom parser */
+  val allProductCatalog: Dataset[ProductCatalog] = rawFile.filter(row => row != header).flatMap(line => ProductCatalogParser.parser(line))
+
+  // We save the dataset in parquet
+  allProductCatalog
+    .write
+    .format("parquet")
+    .option("compression", "snappy")
+    .mode(SaveMode.Overwrite)
+    .save("output/text/products/")
 
   // Close the spark session
   spark.close
