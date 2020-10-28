@@ -9,10 +9,10 @@ the native CSV library from Apache Spark, and the second is using the textFile m
 
 Both solutions are enclosed into a Spark job that can be run independently (locally).
 
-- `TransformaterCSVJobLocal` (Using CSV method)
-- `TransformaterTextJobLocal` (Using textFile)
+- [TransformaterCSVJobLocal.scala](https://github.com/mcornejo/productcatalog/blob/main/src/main/scala/com/murdix/bm/jobs/local/TransformaterCSVJobLocal.scala)` (Using CSV method)
+- [TransformaterTextJobLocal.scala](https://github.com/mcornejo/productcatalog/blob/main/src/main/scala/com/murdix/bm/jobs/local/TransformaterTextJobLocal.scala) (Using textFile)
 
-A third solution is also given `TransformaterCSVJob` that is using the CSV method, with the extensions of support of s3a
+A third solution is also given [TransformaterCSVJob.scala](https://github.com/mcornejo/productcatalog/blob/main/src/main/scala/com/murdix/bm/jobs/cluster/TransformaterCSVJob.scala) that is using the CSV method, with the extensions of support of s3a
 filesystem. This is an example of a _real_ job that can be run in a real hadoop cluster (cf. [Running in an EMR cluster](#running-in-an-EMR-cluster)).
 This job supports reading multiple files in parallel, and the execution of the job in parallel as well. 
 
@@ -63,13 +63,17 @@ In this case, the number of repartitions must be carefully selected depending on
 the partition so that it can reduce the access (hits) to the files.
 
 This _real_ job is capable to read from S3 multiple CSV files in parallel and process them at the same time. Once the processing 
-is finished it can store it in a parallel-fashion as well. 
+is finished it can store it in a parallel-fashion as well. One of the important details is not to exceed the number of request per second
+that amazon [supports](https://aws.amazon.com/premiumsupport/knowledge-center/emr-s3-503-slow-down/). To avoid this exception, 
+the data should be stored and partitioned in a smart way. 
 
 A fine-tuning is needed to select all the parameters for optimal performance. The more balanced the files, the better performance
 it can be obtained.
 
 ### Versioning
-A small changelog was added to review easily the changes in the repo. Comments on the code is also given.
+A small changelog was added to review easily the changes in the repo. Comments on the code is also given. The comments on the
+commits are in the [Conventional Commits standard](https://www.conventionalcommits.org/en/v1.0.0/).
+
 
 ### Idempotency
 The jobs are idempotent, which means if they are executed multiple times with the same input, they produce the same output. This 
