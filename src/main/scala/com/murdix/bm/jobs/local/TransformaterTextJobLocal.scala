@@ -29,13 +29,24 @@ object TransformaterTextJobLocal extends App {
   /* We parse each line using our custom parser */
   val allProductCatalog: Dataset[ProductCatalog] = rawFile.filter(row => row != header).flatMap(line => ProductCatalogParser.parser(line))
 
-  // We save the dataset in parquet
-  allProductCatalog
+  /* We assume that a valid row is a row that contains image, but it might not be complete (for example missing currency) */
+  val validProducts: Dataset[ProductCatalog] = allProductCatalog.filter(_.isValid)
+  val invalidProducts: Dataset[ProductCatalog] = allProductCatalog.filter(!_.isValid)
+
+  /* We store each dataset into its own folder */
+  validProducts
     .write
     .format("parquet")
     .option("compression", "snappy")
     .mode(SaveMode.Overwrite)
-    .save("output/text/products/")
+    .save("output/text/products/valid/")
+
+  invalidProducts
+    .write
+    .format("parquet")
+    .option("compression", "snappy")
+    .mode(SaveMode.Overwrite)
+    .save("output/text/products/invalid/")
 
   // Close the spark session
   spark.close

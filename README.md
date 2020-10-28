@@ -22,7 +22,14 @@ Dataset to apply transformations on a structured and strongly typed distributed 
 
 ## Output
 The output of the job is stored in a columnar parquet file. This makes easier the reading by only consuming the columns needed.
-The folder `output/` contains the files of the local execution.  
+The folder `output/` contains the files of the local execution.
+
+## Assumptions & discussion
+As a typical business requirement, each product category is consider valid if there is an image into the column image.
+This does not mean that the row is _complete_, because a row can contain an image but not a currency. The validation of 
+each row can be done easily by updating the method `isValid` or adding new methods as `isComplete`  into the `ProductCatalog` 
+entity (as it is shown).
+
 
 ## Compilation
 As the project is written using Scala, the source code must be compiled in order to be executed by the JVM.

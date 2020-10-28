@@ -29,13 +29,24 @@ object TransformaterCSVJobLocal extends App {
     .option("inferSchema", "true")
     .csv(csvPath).as[ProductCatalog]
 
-  // We save the dataset in parquet
-  allProductCatalog
+  /* We assume that a valid row is a row that contains image, but it might not be complete (for example missing currency) */
+  val validProducts: Dataset[ProductCatalog] = allProductCatalog.filter(_.isValid)
+  val invalidProducts: Dataset[ProductCatalog] = allProductCatalog.filter(!_.isValid)
+
+  /* We store each dataset into its own folder */
+  validProducts
     .write
     .format("parquet")
     .option("compression", "snappy")
     .mode(SaveMode.Overwrite)
-    .save("output/csv/products/")
+    .save("output/csv/products/valid/")
+
+  invalidProducts
+    .write
+    .format("parquet")
+    .option("compression", "snappy")
+    .mode(SaveMode.Overwrite)
+    .save("output/csv/products/invalid/")
 
   // Close the spark session
   spark.close
