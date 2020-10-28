@@ -1,2 +1,39 @@
-# productcatalog
-BM-productcatalog
+# BM - Product Catalog Spark Job
+
+The idea of this repo is two show two alternatives to ingest and process files in a big data environment. To do so, 
+we take the [ProductCatalog Public Dataset](https://backmarket-data-jobs.s3-eu-west-1.amazonaws.com/data/product_catalog.csv) 
+that contains 1000 rows.
+
+We present two different approaches that can be used depending on the nature of the data. The first solution is using 
+the native CSV library from Apache Spark, and the second is using the the textFile method and parsing row by row.
+
+Both solutions are enclosed into a Spark job that can be run independently (locally).
+
+- TransformaterCSVJobLocal (Using CSV method)
+- TransformaterTextJobLocal (Using textFile)
+
+## Structure
+In the `src` folder it is possible to find the package `com.murdix.bm` containing all the code. 
+
+In `jobs.local` there are the two (Scala) Objects with a Main.
+
+In `entities` we define the class that will represent each line of the Product Catalog. This is the core of using
+Dataset to apply transformations on a structured and strongly typed distributed collection.
+
+## Compilation
+As the project is written using Scala, the source code must be compiled in order to be executed by the JVM.
+
+### Requirements
+- [JDK 11](https://adoptopenjdk.net/): The Java runtime to execute the code 
+- [SBT](https://www.scala-sbt.org/download.html): The interactive build tool to compile and execute the project
+
+## Execution
+To execute the code, just type in a terminal (depending on the job):
+```bash
+$ sbt "runMain com.murdix.bm.jobs.local.TransformaterCSVJobLocal"
+```
+or 
+
+```bash
+$ sbt "runMain com.murdix.bm.jobs.local.TransformaterTextJobLocal"
+```
