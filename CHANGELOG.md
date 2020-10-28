@@ -9,3 +9,7 @@ Changelog for BM-ProductCatalog
  
 # 3.0
 * feature: Clean files: Added support to split the text files into valid and invalid, storing both in parquet.
+
+# 4.0
+* feature: Cluster execution: Added an example of how to run the one job using a cluster and reading multiple files from
+a S3 bucket. 
